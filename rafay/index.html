@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ID Card · Flip</title>
+  <style>
+    :root {
+      --bg-1: #0f172a;
+      --bg-2: #1e293b;
+      --accent: #6366f1;
+      --accent-2: #22d3ee;
+      --ink: #0f172a;
+      --muted: #64748b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      color: #e2e8f0;
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(99,102,241,.35), transparent 60%),
+        radial-gradient(900px 500px at 0% 110%, rgba(34,211,238,.25), transparent 55%),
+        linear-gradient(160deg, var(--bg-1), var(--bg-2));
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- Navbar ---------- */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      backdrop-filter: blur(14px);
+      background: rgba(15, 23, 42, .55);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: .3px;
+    }
+
+    .brand .logo {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 8px 20px rgba(99,102,241,.45);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: .92rem;
+      padding: 9px 16px;
+      border-radius: 999px;
+      transition: .25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #fff;
+      background: rgba(255,255,255,.1);
+    }
+
+    .nav-cta {
+      padding: 9px 20px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 8px 22px rgba(99,102,241,.4);
+      transition: transform .2s ease;
+    }
+    .nav-cta:hover { transform: translateY(-2px); }
+
+    /* ---------- Stage ---------- */
+    .stage {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 60px 20px;
+    }
+
+    .stage-inner { text-align: center; }
+
+    .stage-inner h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin-bottom: 6px;
+    }
+    .stage-inner p {
+      color: #94a3b8;
+      margin-bottom: 40px;
+      font-size: .98rem;
+    }
+
+    /* ---------- Card ---------- */
+    .card {
+      width: 340px;
+      height: 520px;
+      margin: 0 auto;
+      perspective: 1600px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform .9s cubic-bezier(.2,.8,.2,1);
+      transform-style: preserve-3d;
+    }
+
+    .card:hover .card-inner,
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06) inset;
+    }
+
+    /* ---- Front ---- */
+    .front {
+      background: linear-gradient(165deg, #ffffff, #eef2ff);
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .front .top-band {
+      height: 130px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      position: relative;
+    }
+    .front .top-band::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120px 80px at 80% 20%, rgba(255,255,255,.35), transparent 70%);
+    }
+    .org {
+      position: absolute;
+      top: 18px; left: 20px;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: .8rem;
+    }
+
+    .avatar {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      margin: -60px auto 0;
+      border: 5px solid #fff;
+      background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+      display: grid;
+      place-items: center;
+      font-size: 3rem;
+      color: var(--accent);
+      box-shadow: 0 10px 25px rgba(99,102,241,.3);
+      position: relative;
+      z-index: 2;
+    }
+
+    .front .name {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+    .front .role {
+      text-align: center;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: .9rem;
+      margin-top: 2px;
+    }
+
+    .info {
+      margin: 22px 26px 0;
+      display: grid;
+      gap: 12px;
+    }
+    .info .row {
+      display: flex;
+      justify-content: space-between;
+      font-size: .85rem;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+    .info .row span:first-child { color: var(--muted); }
+    .info .row span:last-child { font-weight: 600; color: var(--ink); }
+
+    .flip-hint {
+      margin-top: auto;
+      text-align: center;
+      padding: 14px;
+      font-size: .72rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    /* ---- Back ---- */
+    .back {
+      transform: rotateY(180deg);
+      background: linear-gradient(165deg, #1e1b4b, #312e81);
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      padding: 26px 24px;
+    }
+
+    .back .magstripe {
+      height: 46px;
+      background: #0b1020;
+      margin: 0 -24px 24px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+    }
+
+    .back h3 {
+      font-size: .95rem;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .back p {
+      font-size: .8rem;
+      line-height: 1.6;
+      color: #c7d2fe;
+    }
+
+    .barcode {
+      margin: 24px 0;
+      height: 70px;
+      background: repeating-linear-gradient(90deg, #fff 0 3px, transparent 3px 6px, #fff 6px 8px, transparent 8px 13px);
+      border-radius: 6px;
+      opacity: .9;
+    }
+
+    .signature {
+      margin-top: auto;
+      border-top: 1px solid rgba(255,255,255,.15);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: .72rem;
+      color: #a5b4fc;
+    }
+    .signature .sign {
+      font-family: 'Segoe Script', cursive;
+      font-size: 1.3rem;
+      color: #fff;
+      transform: rotate(-4deg);
+    }
+
+    .qr {
+      width: 62px; height: 62px;
+      border-radius: 8px;
+      background:
+        linear-gradient(#fff,#fff) padding-box,
+        conic-gradient(#000 25%, #fff 0 50%, #000 0 75%, #fff 0);
+      background-size: 100% 100%, 12px 12px;
+      border: 5px solid #fff;
+    }
+
+    @media (max-width: 560px) {
+      .navbar { padding: 14px 18px; }
+      .nav-links { display: none; }
+      .card { width: 300px; height: 480px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="brand">
+      <span class="logo">◈</span>
+      <span>Nexus<span style="color:var(--accent-2)">ID</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#">Cards</a></li>
+      <li><a href="#">Members</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <button class="nav-cta">Get Yours</button>
+  </nav>
+
+  <main class="stage">
+    <div class="stage-inner">
+      <h1>Your Digital Identity</h1>
+      <p>Hover or tap the card to flip it.</p>
+
+      <div class="card" id="card" onclick="this.classList.toggle('flipped')">
+        <div class="card-inner">
+
+          <!-- FRONT -->
+          <div class="face front">
+            <div class="top-band"><span class="org">◈ NEXUS CORP</span></div>
+            <div class="avatar">🧑‍💻</div>
+            <div class="name">Rafay</div>
+            <div class="role">Software Engineer</div>
+            <div class="info">
+              <div class="row"><span>ID No.</span><span>NX-2026-0417</span></div>
+              <div class="row"><span>Department</span><span>Engineering</span></div>
+              <div class="row"><span>Valid Thru</span><span>12 / 2028</span></div>
+              <div class="row"><span>Blood Group</span><span>O+</span></div>
+            </div>
+            <div class="flip-hint">— HOVER / TAP TO FLIP —</div>
+          </div>
+
+          <!-- BACK -->
+          <div class="face back">
+            <div class="magstripe"></div>
+            <h3>TERMS OF USE</h3>
+            <p>This card is property of Nexus Corp. If found, please return to the nearest office. Unauthorized use is prohibited and monitored 24/7.</p>
+            <div class="barcode"></div>
+            <div class="signature">
+              <div>
+                <div class="sign">Rafay</div>
+                <div>Authorized Signature</div>
+              </div>
+              <div class="qr"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
