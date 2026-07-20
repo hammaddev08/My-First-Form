@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+  <title>Bibliotheca - Digital Library Management</title>
+</head>
+<body class="bg-[#0a0f14] text-[#e8e4dc] min-h-screen">
+  
+  <!-- Header -->
+  <header class="border-b border-[#2a3544] bg-[#0d141c]/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#1a3a5c] to-[#0f1f33] border border-[#3a5070] flex items-center justify-center">
+          <svg class="w-5 h-5 text-[#c9a961]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl font-semibold tracking-wide" style="font-family: 'Cormorant Garamond', serif;">Bibliotheca</h1>
+          <p class="text-[10px] text-[#6b7a8f] tracking-[0.2em] uppercase">Digital Collection</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center gap-2 text-sm text-[#8b9aab]">
+          <span class="w-2 h-2 rounded-full bg-[#4ade80]"></span>
+          <span>System Online</span>
+        </div>
+        <div class="text-right">
+          <div class="text-xs text-[#6b7a8f]" id="currentDate"></div>
+          <div class="text-sm font-medium text-[#c9a961]" id="currentTime"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    
+    <!-- Stats Row -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-[#111820] border border-[#2a3544] rounded-xl p-5">
+        <div class="text-[#6b7a8f] text-xs uppercase tracking-wider mb-1">Total Volumes</div>
+        <div class="text-3xl font-light text-[#e8e4dc]" id="totalBooks">0</div>
+      </div>
+      <div class="bg-[#111820] border border-[#2a3544] rounded-xl p-5">
+        <div class="text-[#6b7a8f] text-xs uppercase tracking-wider mb-1">Unique Authors</div>
+        <div class="text-3xl font-light text-[#e8e4dc]" id="totalAuthors">0</div>
+      </div>
+      <div class="bg-[#111820] border border-[#2a3544] rounded-xl p-5">
+        <div class="text-[#6b7a8f] text-xs uppercase tracking-wider mb-1">Categories</div>
+        <div class="text-3xl font-light text-[#e8e4dc]">Fiction</div>
+      </div>
+      <div class="bg-[#111820] border border-[#2a3544] rounded-xl p-5">
+        <div class="text-[#6b7a8f] text-xs uppercase tracking-wider mb-1">Last Updated</div>
+        <div class="text-sm font-medium text-[#c9a961]" id="lastUpdated">Just now</div>
+      </div>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Left: Add/Edit Form -->
+      <div class="lg:col-span-1">
+        <div class="bg-[#111820] border border-[#2a3544] rounded-2xl overflow-hidden">
+          <div class="px-6 py-5 border-b border-[#2a3544] bg-[#0d141c]">
+            <h2 class="text-lg font-medium" style="font-family: 'Cormorant Garamond', serif;" id="formTitle">Add New Volume</h2>
+            <p class="text-xs text-[#6b7a8f] mt-1" id="formSubtitle">Register a new book to the collection</p>
+          </div>
+          
+          <form id="bookForm" class="p-6 space-y-5">
+            <div>
+              <label class="block text-xs uppercase tracking-wider text-[#8b9aab] mb-2 font-medium">Title</label>
+              <input type="text" id="titleInput" placeholder="e.g., The Great Gatsby" 
+                class="w-full bg-[#0a0f14] border border-[#2a3544] rounded-lg px-4 py-3 text-sm text-[#e8e4dc] placeholder-[#4a5568] focus:outline-none focus:border-[#c9a961] focus:ring-1 focus:ring-[#c9a961]/30 transition-all">
+            </div>
+            
+            <div>
+              <label class="block text-xs uppercase tracking-wider text-[#8b9aab] mb-2 font-medium">Author</label>
+              <input type="text" id="authorInput" placeholder="e.g., F. Scott Fitzgerald" 
+                class="w-full bg-[#0a0f14] border border-[#2a3544] rounded-lg px-4 py-3 text-sm text-[#e8e4dc] placeholder-[#4a5568] focus:outline-none focus:border-[#c9a961] focus:ring-1 focus:ring-[#c9a961]/30 transition-all">
+            </div>
+            
+            <div>
+              <label class="block text-xs uppercase tracking-wider text-[#8b9aab] mb-2 font-medium">ISBN</label>
+              <input type="text" id="isbnInput" placeholder="978-3-16-148410-0" 
+                class="w-full bg-[#0a0f14] border border-[#2a3544] rounded-lg px-4 py-3 text-sm text-[#e8e4dc] placeholder-[#4a5568] focus:outline-none focus:border-[#c9a961] focus:ring-1 focus:ring-[#c9a961]/30 transition-all font-mono">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs uppercase tracking-wider text-[#8b9aab] mb-2 font-medium">Status</label>
+                <select id="statusInput" 
+                  class="w-full bg-[#0a0f14] border border-[#2a3544] rounded-lg px-4 py-3 text-sm text-[#e8e4dc] focus:outline-none focus:border-[#c9a961] focus:ring-1 focus:ring-[#c9a961]/30 transition-all">
+                  <option value="Available">Available</option>
+                  <option value="Checked Out">Checked Out</option>
+                  <option value="Reserved">Reserved</option>
+                  <option value="In Repair">In Repair</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs uppercase tracking-wider text-[#8b9aab] mb-2 font-medium">Genre</label>
+                <select id="genreInput"
+                  class="w-full bg-[#0a0f14] border border-[#2a3544] rounded-lg px-4 py-3 text-sm text-[#e8e4dc] focus:outline-none focus:border-[#c9a961] focus:ring-1 focus:ring-[#c9a961]/30 transition-all">
+                  <option value="Fiction">Fiction</option>
+                  <option value="Non-Fiction">Non-Fiction</option>
+                  <option value="Science">Science</option>
+                  <option value="History">History</option>
+                  <option value="Philosophy">Philosophy</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="flex gap-3 pt-2">
+              <button type="submit" id="saveBookBtn" 
+                class="flex-1 bg-[#c9a961] hover:bg-[#d4b872] text-[#0a0f14] font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-sm tracking-wide flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span id="saveBtnText">Register Volume</span>
+              </button>
+              <button type="button" id="cancelEditBtn" hidden
+                class="px-4 py-3 border border-[#5a2a2a] text-[#e8a0a0] hover:bg-[#2a1515] rounded-lg transition-all text-sm">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right: Catalog -->
+      <div class="lg:col-span-2">
+        <div class="bg-[#111820] border border-[#2a3544] rounded-2xl overflow-hidden">
+          <!-- Catalog Header -->
+          <div class="px-6 py-5 border-b border-[#2a3544] bg-[#0d141c] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-medium" style="font-family: 'Cormorant Garamond', serif;">Collection Catalog</h2>
+              <p class="text-xs text-[#6b7a8f] mt-1">Browse and manage library volumes</p>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              <div class="relative">
+                <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7a8f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search catalog..." 
+                  class="bg-[#0a0f14] border border-[#2a3544] rounded-lg pl-10 pr-4 py-2 text-sm text-[#e8e4dc] placeholder-[#4a5568] focus:outline-none focus:border-[#c9a961] focus:ring-1 focus:ring-[#c9a961]/30 transition-all w-64">
+              </div>
+              <select id="filterStatus" 
+                class="bg-[#0a0f14] border border-[#2a3544] rounded-lg px-3 py-2 text-sm text-[#e8e4dc] focus:outline-none focus:border-[#c9a961] transition-all">
+                <option value="all">All Status</option>
+                <option value="Available">Available</option>
+                <option value="Checked Out">Checked Out</option>
+                <option value="Reserved">Reserved</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Book List -->
+          <div id="booksContainer" class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Book cards rendered here -->
+          </div>
+          
+          <!-- Empty State -->
+          <div id="emptyState" class="hidden px-6 py-16 text-center">
+            <svg class="w-16 h-16 mx-auto text-[#2a3544] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            <p class="text-[#6b7a8f] text-sm">No volumes found matching your criteria</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-[#2a3544] mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-xs text-[#4a5568]">
+        Bibliotheca Digital Library System. All rights reserved.
+      </div>
+      <div class="flex items-center gap-6 text-xs text-[#4a5568]">
+        <span>v2.4.1</span>
+        <span>Secure Access</span>
+        <span class="flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#4ade80]"></span>
+          Connected
+        </span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
