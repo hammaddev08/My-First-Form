@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxford Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===================== Top bar ===================== -->
+    <div class="topbar">
+        <div class="topbar-inner">
+            <div class="crest">O</div>
+            <div>
+                <h1>Pride Library</h1>
+                <div class="sub">Management System</div>
+            </div>
+            <div class="spacer"></div>
+            <div class="librarian">
+                <strong>Bodleian Desk</strong>
+                Head Librarian
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== Page ===================== -->
+    <div class="page">
+        <h1 class="page-title">Catalogue Overview</h1>
+        <p>Manage the collection — add, search, update and remove titles.</p>
+
+        <!-- Stat cards -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon blue">📚</div>
+                <div>
+                    <div class="number" id="totalCount">0</div>
+                    <div class="label">Total Books</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">✓</div>
+                <div>
+                    <div class="number" id="availableCount">0</div>
+                    <div class="label">Available</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon amber">↗</div>
+                <div>
+                    <div class="number" id="borrowedCount">0</div>
+                    <div class="label">On Loan</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Working layout: form + catalogue -->
+        <div class="layout">
+
+            <!-- Left: Add / Edit form -->
+            <div class="panel form-panel">
+                <div class="panel-head">
+                    <h2 id="formTitle">Add a Book</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" placeholder="e.g. Pride and Prejudice">
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author</label>
+                        <input type="text" id="author" placeholder="e.g. Jane Austen">
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="number" id="year" placeholder="e.g. 1813">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="Available">Available</option>
+                            <option value="Borrowed">Borrowed</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn" onclick="saveBook()">Save Book</button>
+                </div>
+            </div>
+
+            <!-- Right: Catalogue -->
+            <div class="panel">
+                <div class="panel-head">
+                    <h2>Book Catalogue</h2>
+                    <span class="count" id="catalogueCount"></span>
+                </div>
+                <div class="search-wrap">
+                    <input type="text" id="search" class="search-box"
+                           placeholder="Search by title or author..." onkeyup="showBooks()">
+                </div>
+                <!-- Book cards are added here by JavaScript -->
+                <div class="book-grid" id="bookList"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        Oxford Library Management System · Practice Project
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
