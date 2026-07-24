@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <Script src="script.js"></Script>
+  <title>Asynchronous Function</title>
+</head>
+
+<body style="background-color: black; font-family: cursive; color: white;">
+  <h1 style="text-align: center;">Asynchronous Behavior In JavaScript</h1>
+  <h2>How Javascript works</h2>
+  <ul>
+    <li>Event-Loops (Is handling the both call back queue or Micro Stack queue)</li>
+    <li>Call Stack (The place all code are store before Execution)</li>
+    <li>Call Stack Queue or Macro queue (The Place where all browser APi are store when the Javascript code is running)
+    </li>
+    <li>Micro Stack Queue (The place where all Promises are store when the javascript code is running)</li>
+  </ul>
+  <p>We Know that Javascript is performed synchronous Operations and also Known as single threaded Language. so the
+    before execution of code the code move to <b>Call Stack</b> and after call Stack the code is Executed.So when we
+    need to run javascript in Asynchronous then its work differently so when we use browser APi's for example SetTimeout
+    and setInterval so when code is run these line it cannot be executed same time javascript send this into <b>Call
+      Stack Queue</b> and it can stay there until the the all javascript code is run completely and also all Promises
+    are completed then. so this condition handle by <b>Event loop</b> so Event loop is handling all Asynchronous
+    Function but the Priority is always be Promises after running javascript code the event loop is send all promises
+    into Call stack for execution and then all Micro Queue is completed empty where all promises store.</p>
+
+    <h2>Step by Step working of javascript</h2>
+<ol>
+  <li>Global Execution Contest</li>
+  <li>Execution Contest</li>
+  <li>Memory or Execution Phase</li>
+  <li>Call Stack (Also Code Execution)</li>
+  <li>Event-loops</li>
+  <li>Call-Stack Queue</li>
+  <li>Micro Stack Queue</li>
+</ol>
+</body>
+
+</html>
