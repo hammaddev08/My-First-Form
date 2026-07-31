@@ -14,4 +14,18 @@ const books = [{
     title: 'Book 3',
     author: 'Author 3'
 }]
-module.exports = books
+
+
+const users = [{
+    id: 1,
+    name: 'User 1',
+    password: 'password1',
+    email: 'user1@example.com'
+},
+{
+    id: 2,
+    name: 'User 2',
+    password: 'password2',
+    email: 'user2@example.com'
+}]
+module.exports = { books, users };

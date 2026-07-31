@@ -1,10 +1,10 @@
-const bookModel = require('../model/model');
+const {bookModel,users} = require('../model/model');
 
-exports.getBooks = (req, res) => {
+const getBooks = (req, res) => {
     res.json(bookModel);
   };
 
-exports.getBookById = (req, res) => {
+const getBookById = (req, res) => {
 
   const id = Number(req.params.id);
 
@@ -20,7 +20,7 @@ exports.getBookById = (req, res) => {
 
 };
 
-exports.createBook = (req, res) => {
+const createBook = (req, res) => {
 
   const newBook = {
     id: bookModel.length + 1,
@@ -33,3 +33,20 @@ exports.createBook = (req, res) => {
   res.status(201).json(newBook);
 
 };
+ const userVerification = (req,res) =>{
+  const {email,password,id,name} = req.body;
+
+  const user = users.find(user => user.email === email  && user.password === password && user.id ==id);
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found"
+    });
+  }
+  res.status(200).json({
+    message: "User verified successfully"
+  });
+}
+
+
+module.exports = { getBooks, getBookById, createBook,userVerification };
