@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auth App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1 id="page-title">Welcome</h1>
+
+      <div id="auth-section">
+        <div id="register-form" class="form-section">
+          <h2>Register</h2>
+          <form id="register">
+            <input type="text" id="reg-username" placeholder="Username" required style="margin-bottom: 4px;" />
+            <input type="email" id="reg-email" placeholder="Email" required style="margin-bottom: 4px;" />
+            <input type="password" id="reg-password" placeholder="Password" required style="margin-bottom: 4px;" />
+            <button type="submit">Register</button>
+          </form>
+          <p class="switch-text">
+            Already have an account? <a href="#" id="show-login">Login</a>
+          </p>
+        </div>
+
+        <div id="login-form" class="form-section hidden">
+          <h2>Login</h2>
+          <form id="login">
+            <input type="email" id="login-email" placeholder="Email" required style="margin-bottom: 4px;" />
+            <input type="password" id="login-password" placeholder="Password" required style="margin-bottom: 4px;"  />
+            <button type="submit">Login</button>
+          </form>
+          <p class="switch-text">
+            Don't have an account? <a href="#" id="show-register">Register</a>
+          </p>
+        </div>
+      </div>
+
+      <div id="dashboard" class="hidden">
+        <h2>Welcome, <span id="user-name"></span>!</h2>
+        <p>Email: <span id="user-email"></span></p>
+        <button id="logout">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
